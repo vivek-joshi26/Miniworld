@@ -1,0 +1,18 @@
+###
+
+GET http://localhost:8000/getUsers
+
+###
+
+POST http://localhost:8000/createUser
+content-type: application/json
+
+{
+    "firstName": "Vivek2",
+    "lastName": "Joshi2",
+    "age": 27,
+    "emailId": "vivek.joshi2@sjsu.edu",
+    "password": "password123",
+    "university": "San Jose State University",
+    "program": "MSSE"
+}
