@@ -8,42 +8,29 @@ const userRouter = require("./routers/userRouter")
 app.use(express.json());
 app.use(cors());
 
-app.use("/user", userRouter);
+const { mongoDB } = require('../config');
+
+var options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    maxPoolSize: 100
+};
+
+mongoose.connect(mongoDB, options, (err, res) => {
+    if (err) {
+        console.log(err);
+        console.log(`MongoDB Connection Failed`);
+    } else {
+        console.log(`MongoDB Connected`);
+    }
+});
+
 
 app.get("/", function(req,resp){
     resp.send("Miniworld Endpoints");
 });
 
-
-mongoose.connect("mongodb+srv://cmpe297:cmpe297@project.bios0vn.mongodb.net/miniworld?retryWrites=true&w=majority");
-
-
-// testing basic get and post request
-app.get("/getUsers", (req, res) => {
-
-    UserModel.find({}, (err, result) => {
-        if (err){
-            console.log("Error in  UserModel.find , " + err)
-        } else{
-            res.json(result);
-        }
-    })
-
-
-})
-
-
-
-app.post("/createUser",async (req, res) => {
-    
-
-    const user = req.body;
-    const newUser = new UserModel(user);
-    await newUser.save();
-
-    res.json(user);
-})
-
+app.use("/user", userRouter);
 
 
 app.listen(8000, () => {
