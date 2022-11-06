@@ -1,18 +1,51 @@
+// User Endpoints
 ###
-
-GET http://localhost:8000/getUsers
-
-###
-
-POST http://localhost:8000/createUser
+POST http://localhost:8000/user/register
 content-type: application/json
 
 {
     "firstName": "Vivek2",
     "lastName": "Joshi2",
     "age": 27,
-    "emailId": "vivek.joshi2@sjsu.edu",
+    "emailId": "vivek.joshi222@sjsu.edu",
     "password": "password123",
     "university": "San Jose State University",
     "program": "MSSE"
 }
+
+
+###
+GET http://localhost:8000/user/find/vivek.joshi2@sjsu.edu
+# content-type: application/json
+
+# {
+   
+#     "emailId": "vivek.joshi2@sjsu.edu"
+# }
+
+
+###
+POST  http://localhost:8000/user/login
+content-type: application/json
+req-
+{
+   
+    "emailId": "vivek.joshi222@sjsu.edu",
+    "password": "password123"
+}
+res-
+
+{
+  "_id": "63676d4e2d54e098f3ce93ed",
+  "firstName": "Vivek2",
+  "lastName": "Joshi2",
+  "age": 27,
+  "emailId": "vivek.joshi222@sjsu.edu",
+  "password": "$2a$08$R9.bW4LfH/6lBqe1SXP6/u7qBcWpzRxUQOyplgKjzw3pElWXl/ChG",
+  "university": "San Jose State University",
+  "program": "MSSE",
+  "__v": 0
+}
+
+// For Bloom-filter, we can use out the library - https://www.npmjs.com/package/bloom-filters
+// or we can implement our version too

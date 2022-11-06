@@ -3,9 +3,17 @@ const app = express()
 const mongoose = require("mongoose")
 const UserModel =  require("./models/Users")
 const cors = require("cors")
+const userRouter = require("./routers/userRouter")
 
 app.use(express.json());
 app.use(cors());
+
+app.use("/user", userRouter);
+
+app.get("/", function(req,resp){
+    resp.send("Miniworld Endpoints");
+});
+
 
 mongoose.connect("mongodb+srv://cmpe297:cmpe297@project.bios0vn.mongodb.net/miniworld?retryWrites=true&w=majority");
 
@@ -41,3 +49,6 @@ app.post("/createUser",async (req, res) => {
 app.listen(8000, () => {
     console.log("Server is running on port 8000")
 })
+
+
+module.exports = app;
