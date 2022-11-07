@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const UserModel =  require("./models/Users")
 const cors = require("cors")
 const userRouter = require("./routers/userRouter")
+const scholarshipRouter = require("./routers/scholarshipRouter")
 
 app.use(express.json());
 app.use(cors());
@@ -31,6 +32,8 @@ app.get("/", function(req,resp){
 });
 
 app.use("/user", userRouter);
+
+app.use("/scholarship", scholarshipRouter)
 
 
 app.listen(8000, () => {

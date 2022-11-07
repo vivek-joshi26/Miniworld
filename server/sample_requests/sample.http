@@ -37,3 +37,57 @@ content-type: application/json
 
 // For Bloom-filter, we can use out the library - https://www.npmjs.com/package/bloom-filters
 // or we can implement our version too
+
+
+// Scholarship Endpoints
+
+###
+GET http://localhost:8000/scholarship/find
+# content-type: application/json
+
+# {
+   
+#     "emailId": "vivek.joshi2@sjsu.edu"
+# }
+
+
+###
+GET http://localhost:8000/scholarship/find?university=San Jose State University2
+# content-type: application/json
+
+# {
+   
+#     "emailId": "vivek.joshi2@sjsu.edu"
+# }
+
+
+###
+GET http://localhost:8000/scholarship/find?program=MSSE
+# content-type: application/json
+
+# {
+   
+#     "emailId": "vivek.joshi2@sjsu.edu"
+# }
+
+
+###
+GET http://localhost:8000/scholarship/find?university=San Jose State University2&program=MSCE
+# content-type: application/json
+
+# {
+   
+#     "emailId": "vivek.joshi2@sjsu.edu"
+# }
+
+
+###
+POST http://localhost:8000/scholarship/register
+content-type: application/json
+
+{
+    "name": "Scholarship2",
+    "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+    "university": "San Jose State University2",
+    "program": "MSCE"
+}
