@@ -31,9 +31,9 @@ app.get("/", function(req,resp){
     resp.send("Miniworld Endpoints");
 });
 
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 
-app.use("/scholarship", scholarshipRouter)
+app.use("/scholarships", scholarshipRouter)
 
 
 app.listen(8000, () => {

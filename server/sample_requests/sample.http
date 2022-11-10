@@ -41,53 +41,174 @@ content-type: application/json
 
 // Scholarship Endpoints
 
+
 ###
-GET http://localhost:8000/scholarship/find
-# content-type: application/json
+// Paginated API to get all the scholarships
+GET http://localhost:8000/scholarships?page=1&limit=6
 
 # {
-   
-#     "emailId": "vivek.joshi2@sjsu.edu"
+#   "results": [
+#     {
+#       "_id": "636874d85ab53fa2a6c7aa7c",
+#       "name": "The Aga Khan Foundation International Scholarship",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University",
+#       "program": "MSSE",
+#       "__v": 0
+#     },
+#     {
+#       "_id": "636875515ab53fa2a6c7aa83",
+#       "name": "Scholarship2",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University",
+#       "program": "MSSE",
+#       "__v": 0
+#     }
+#   ]
+# }
+
+
+
+###
+// Paginated API to get scholarships based on a university name
+GET http://localhost:8000/scholarships?university=Santa Clara University&page=1&limit=4
+
+
+# {
+#   "results": [
+#     {
+#       "_id": "63687b2ff2084f69402d6521",
+#       "name": "Scholarship2",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University2",
+#       "program": "MSSE",
+#       "__v": 0
+#     },
+#     {
+#       "_id": "63687b60f2084f69402d6528",
+#       "name": "Scholarship2",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University2",
+#       "program": "MSCE",
+#       "__v": 0
+#     }
+#   ]
+# }
+
+
+
+###
+// Paginated API to get scholarships based on a program name
+GET http://localhost:8000/scholarships?program=MSSE&page=1&limit=10
+
+
+# {
+#   "results": [
+#     {
+#       "_id": "636874d85ab53fa2a6c7aa7c",
+#       "name": "The Aga Khan Foundation International Scholarship",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University",
+#       "program": "MSSE",
+#       "__v": 0
+#     },
+#     {
+#       "_id": "636875515ab53fa2a6c7aa83",
+#       "name": "Scholarship2",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University",
+#       "program": "MSSE",
+#       "__v": 0
+#     }
+#   ]
+# }
+
+
+
+###
+// Paginated API to get scholarships based on a program name and university name
+
+GET http://localhost:8000/scholarships?university=Santa Clara University&program=MSSE&page=1&limit=4
+
+# {
+#   "results": [
+#     {
+#       "_id": "63687b2ff2084f69402d6521",
+#       "name": "Scholarship2",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "San Jose State University2",
+#       "program": "MSSE",
+#       "__v": 0
+#     }
+#   ]
+# }
+
+
+
+###
+// Paginated API to get scholarships based on user input, search is done on name and description of the scholarship using text index
+
+GET http://localhost:8000/scholarships/search?search=Santa Clara&page=1&limit=5
+
+# {
+#   "results": [
+#     {
+#       "_id": "636d86ac5798ebcab4848637",
+#       "name": "Santa Clara Bright Scholarship",
+#       "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
+#       "university": "Santa Clara University",
+#       "program": "MSSE",
+#       "scholarshipAmount": 10000,
+#       "__v": 0
+#     }
+#   ]
 # }
 
 
 ###
-GET http://localhost:8000/scholarship/find?university=San Jose State University2
-# content-type: application/json
-
-# {
-   
-#     "emailId": "vivek.joshi2@sjsu.edu"
-# }
-
-
-###
-GET http://localhost:8000/scholarship/find?program=MSSE
-# content-type: application/json
-
-# {
-   
-#     "emailId": "vivek.joshi2@sjsu.edu"
-# }
-
-
-###
-GET http://localhost:8000/scholarship/find?university=San Jose State University2&program=MSCE
-# content-type: application/json
-
-# {
-   
-#     "emailId": "vivek.joshi2@sjsu.edu"
-# }
-
-
-###
-POST http://localhost:8000/scholarship/register
+// API to register a Scholarship
+POST http://localhost:8000/scholarships/register
 content-type: application/json
 
 {
-    "name": "Scholarship2",
-    "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan.",
-    "university": "San Jose State University2",
-    "program": "MSCE"
+    "name": "California State University Long Beach",
+    "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan. Eligible for Santa Clara University students too.",
+    "university": "Santa Clara University",
+    "program": "MSSE",
+    "scholarshipAmount": 16000
 }
+
+
+
+
+
+# Indexes on MongoDB
+
+# 1 - Text index on name and desription field of scholarships collection using query -
+#     db.scholarships.createIndex({name: "text", description: "text"})
+
+# 2 - Compound index on university and scholarshipAmount field using query -
+#     db.scholarships.createIndex({"university": 1, "scholarshipAmount": 1})
+
+# Can see the indexes created using query - db.scholarships.getIndexes()
+
+# [
+#   { v: 2, key: { _id: 1 }, name: '_id_' },
+#   {
+#     v: 2,
+#     key: { _fts: 'text', _ftsx: 1 },
+#     name: 'name_text_description_text',
+#     weights: { description: 1, name: 1 },
+#     default_language: 'english',
+#     language_override: 'language',
+#     textIndexVersion: 3
+#   },
+#   {
+#     v: 2,
+#     key: { university: 1, scholarshipAmount: 1 },
+#     name: 'university_1_scholarshipAmount_1'
+#   }
+# ]
+
+# # Can connect to mongoDB from terminal using -
+# mongosh mongodb+srv://cmpe297:cmpe297@project.bios0vn.mongodb.net/miniworld

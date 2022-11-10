@@ -23,35 +23,69 @@ exports.registerScholarship = ( req, res ) => {
 
 
 exports.find = async (req, res) => {
-
     try{
         var university = req.query.university
         var program = req.query.program
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const skipIndex = (page - 1) * limit;
         
-        let scholarships ;
+        const results = {};
         if (university != undefined || program != undefined){
 
             if (university != undefined && program != undefined){
-                scholarships = await ScholarshipModel.find({    university:university,
+                results.results = await ScholarshipModel.find({    university:university,
                       program: program
-                });
+                })
+                .limit(limit)
+                .skip(skipIndex);
             }
             else if (university != undefined ){
-                scholarships = await ScholarshipModel.find({    university:university  });
+                results.results = await ScholarshipModel.find({    university:university  })
+                .limit(limit)
+                .skip(skipIndex);;
             }else{
-                scholarships = await ScholarshipModel.find({    
+                results.results = await ScholarshipModel.find({    
                     program: program
-              });
+              }).sort({ scholarshipAmount: -1 })
+              .limit(limit)
+              .skip(skipIndex);;
             }
             
 
         }
        
         else{
-            scholarships = await ScholarshipModel.find();
+            results.results = await ScholarshipModel.find().sort({ scholarshipAmount: -1 })
+            .limit(limit)
+            .skip(skipIndex);;
         }
 
-        res.status(200).send(scholarships)
+        res.status(200).send(results)
+        
+    }
+    catch(err){
+        console.log("Inside scholarshipController find : " + err);
+    }
+}
+
+
+exports.search= async (req, res) => {
+    try{
+        var search = req.query.search
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const skipIndex = (page - 1) * limit;
+        
+        const results = {};
+
+        const query = { $text : { $search : search}};
+        results.results = await ScholarshipModel.find(query).sort({ scholarshipAmount: -1 })
+        .limit(limit)
+        .skip(skipIndex);;
+       
+
+        res.status(200).send(results)
         
     }
     catch(err){

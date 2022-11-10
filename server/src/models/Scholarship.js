@@ -17,6 +17,11 @@ const ScholarshipSchema = new mongoose.Schema({
         type: String,
         trim: true
     }
+    ,
+    scholarshipAmount : {
+        type: Number,
+        trim: true
+    }
 });
 
 
