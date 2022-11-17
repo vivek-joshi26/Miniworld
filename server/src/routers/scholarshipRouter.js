@@ -17,6 +17,11 @@ router.get("/search", scholarshipController.search);
 // apply for a scholarship
 router.post("/apply", scholarshipController.applyScholarship);
 
+// apply for a scholarship2
+router.post("/apply2", scholarshipController.applyScholarship2);
+
 router.get("/apply/:applicantId", scholarshipController.findApplications);
+
+router.get("/apply2/:userId", scholarshipController.findApplicationsApplied);
 
 module.exports = router;

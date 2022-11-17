@@ -188,6 +188,7 @@ content-type: application/json
 // Application Endpoints
 
 
+/// Can keep either below 2 apis or the next 2 apis
 ###
 // How to apply for a scholarship
 Post http://localhost:8000/scholarships/apply
@@ -202,6 +203,27 @@ content-type: application/json
 // Get all the scholarship application data for a user
 
 GET http://localhost:8000/scholarships/apply/6375838f077ca5b4c2ba2e9c?page=1&limit=5
+
+
+
+###
+// How to apply for a scholarship
+Post http://localhost:8000/scholarships/apply2
+content-type: application/json
+
+{
+    "userId" : "6375838f077ca5b4c2ba2e9c",
+    "scholarshipId" : "63687b2ff2084f69402d6521"
+}
+
+
+###
+// Get all the scholarships applied for a user
+GET http://localhost:8000/scholarships/apply2/6375838f077ca5b4c2ba2e9c
+
+
+
+
 
 
 
