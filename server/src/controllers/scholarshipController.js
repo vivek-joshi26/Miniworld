@@ -1,4 +1,6 @@
-const ScholarshipModel = require("../models/Scholarship")
+const ApplicationModel = require("../models/Application");
+const ScholarshipModel = require("../models/Scholarship");
+const UserModel = require("../models/Users");
 
 
 
@@ -20,6 +22,27 @@ exports.registerScholarship = ( req, res ) => {
 
 
 }
+
+
+exports.findById = async (req, res) => {
+    try{
+        console.log("param value:" + req.params.scholarshipId)
+        const scholarship = await ScholarshipModel.findOne({_id: req.params.scholarshipId});
+        console.log("Scholarship "+scholarship);
+        if(scholarship === null){
+            res.status(204).send("scholarship not present")
+        }
+        else {
+            res.status(200).send(scholarship)
+        }
+    }
+    catch(err){
+        console.log("Inside scholarshipController findById");
+    }
+
+}
+
+
 
 
 exports.find = async (req, res) => {
@@ -90,5 +113,69 @@ exports.search= async (req, res) => {
     }
     catch(err){
         console.log("Inside scholarshipController find : " + err);
+    }
+}
+
+
+
+exports.applyScholarship = async( req, res ) => {
+
+
+    const userId = req.body.userId;
+    const scholarshipId = req.body.scholarshipId;
+
+    console.log(userId + " " + scholarshipId)
+
+    const scholarship = await ScholarshipModel.findOne({_id: scholarshipId}, {name:1, _id : 0});
+    const user = await UserModel.findOne({_id: userId}, {name: 1, university: 1, program: 1, _id : 0});
+   
+    const application = {
+        "applicantId": userId,
+        "scholarshipId": scholarshipId,
+        "scholarshipName": scholarship.name,
+        "status" : "PENDING",
+        "applicantUniversity": user.university,
+        "applicantProgram": user.program,
+        "dateApplied" : new Date(Date.now())
+    };
+    const newApplication = new ApplicationModel(application);
+    newApplication.save((err, result) => {
+        if (err){
+            res
+            .status(500)
+            .send(JSON.stringify({ message: "Something went wrong!", err }));
+
+        } else {
+            res.send(JSON.stringify({newApplication : result}));
+        }
+    });
+}
+
+
+
+
+
+exports.findApplications = async (req, res) => {
+
+    console.log("date: " + new Date(Date.now()) )
+    
+    try{
+
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const skipIndex = (page - 1) * limit;
+    console.log(req.params.applicantId)
+    
+    const results = await ApplicationModel.find({    
+    applicantId: req.params.applicantId
+    }).sort({ dateApplied: -1})
+    .limit(limit)
+    .skip(skipIndex);
+             
+    res.status(200).send(results)
+        
+    }
+    catch(err){
+        console.log("Inside scholarshipController findApplications : " + err);
     }
 }
