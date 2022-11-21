@@ -9,7 +9,8 @@ content-type: application/json
     "emailId": "vivek.joshi7@sjsu.edu",
     "password": "password123",
     "university": "San Jose State University",
-    "program": "MSSE"
+    "program": "MSSE",
+    "role" : "Student"
 }
 
 
@@ -43,12 +44,12 @@ content-type: application/json
 
 ###
 // How to get details of a single scholarship based on its object it
-GET http://localhost:8000/scholarships/636d8a289deb4e0c598fa536
+GET http://localhost:8000/scholarships/63687600181ece6df9850366
 
 
 ###
 // Paginated API to get all the scholarships
-GET http://localhost:8000/scholarships?page=1&limit=6
+GET http://localhost:8000/scholarships?page=2&limit=6
 
 # {
 #   "results": [
@@ -152,7 +153,7 @@ GET http://localhost:8000/scholarships?university=Santa Clara University&program
 ###
 // Paginated API to get scholarships based on user input, search is done on name and description of the scholarship using text index
 
-GET http://localhost:8000/scholarships/search?search=Santa Clara&page=1&limit=5
+GET http://localhost:8000/scholarships/textSearch?search=Santa Clara&page=1&limit=10
 
 # {
 #   "results": [
@@ -175,6 +176,7 @@ POST http://localhost:8000/scholarships/register
 content-type: application/json
 
 {
+    "creatorId" : "6375838f077ca5b4c2ba2e9c",
     "name": "California State University Long Beach",
     "description": "Provides scholarships to students from select developing countries who have no other source of financial help for their graduate studies. The scholarships are 50 percent grant and 50 percent loan. Eligible for Santa Clara University students too.",
     "university": "Santa Clara University",
@@ -187,8 +189,6 @@ content-type: application/json
 
 // Application Endpoints
 
-
-/// Can keep either below 2 apis or the next 2 apis
 ###
 // How to apply for a scholarship
 Post http://localhost:8000/scholarships/apply
@@ -196,34 +196,26 @@ content-type: application/json
 
 {
     "userId" : "6375838f077ca5b4c2ba2e9c",
-    "scholarshipId" : "636d86ac5798ebcab4848637"
-}
-
-###
-// Get all the scholarship application data for a user
-
-GET http://localhost:8000/scholarships/apply/6375838f077ca5b4c2ba2e9c?page=1&limit=5
-
-
-
-###
-// How to apply for a scholarship
-Post http://localhost:8000/scholarships/apply2
-content-type: application/json
-
-{
-    "userId" : "6375838f077ca5b4c2ba2e9c",
-    "scholarshipId" : "63687b2ff2084f69402d6521"
+    "scholarshipId" : "63687600181ece6df9850366"
 }
 
 
 ###
 // Get all the scholarships applied for a user
-GET http://localhost:8000/scholarships/apply2/6375838f077ca5b4c2ba2e9c
+GET http://localhost:8000/scholarships/apply/6375838f077ca5b4c2ba2e9c
 
 
+###
+// How to update the status of individual scholarship status
+Post http://localhost:8000/scholarships/status
+content-type: application/json
 
-
+{
+    "userId" : "6375838f077ca5b4c2ba2e9c",
+    "scholarshipId" : "63687600181ece6df9850366",
+    "status": "APPROVED",
+    "scholarshipAmount": 12000
+}
 
 
 

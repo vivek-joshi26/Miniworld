@@ -43,9 +43,12 @@ const ScholarshipApplicationSchema = new mongoose.Schema({
             },
             dateApplied: {
                 type: Date
+            },
+            dateUpdated: {
+                type: Date
             }
         }
-]
+    ]
 
 
 }

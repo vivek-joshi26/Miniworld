@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema({
     program : {
         type: String,
         trim: true
+    },
+    role : {
+        type: String,
+        trim: true
     }
 });
 
