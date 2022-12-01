@@ -27,6 +27,9 @@ router.post("/apply", scholarshipController.applyScholarship2);
 
 router.get("/apply/:userId", scholarshipController.findApplicationsApplied);
 
+
+router.get("/created/:creatorId", scholarshipController.findScholarshipsCreated);
+
 router.post("/status", scholarshipController.updateScholarshipApplication);
 
 

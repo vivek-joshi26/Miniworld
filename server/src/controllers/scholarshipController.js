@@ -178,6 +178,11 @@ exports.applyScholarship2 = async( req, res ) => {
 
     const dataForScholarshipSchema = {
         "applicantId" : userId1,
+        "applicantEmailId" : user.emailId,
+        "applicantName" : user.name,
+        "applicantUniversity": user.university,
+        "applicantProgram": user.program,
+        "applicantGPA" : user.gpa,
         "status" : "PENDING",
         "dateApplied" : new Date(Date.now())
     }
@@ -277,32 +282,32 @@ exports.applyScholarship2 = async( req, res ) => {
 
 
 
+// can be ignored
 
+// exports.findApplications = async (req, res) => {
 
-exports.findApplications = async (req, res) => {
-
-    console.log("date: " + new Date(Date.now()) )
+//     console.log("date: " + new Date(Date.now()) )
     
-    try{
+//     try{
 
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
-    const skipIndex = (page - 1) * limit;
-    console.log(req.params.applicantId)
+//     const page = parseInt(req.query.page);
+//     const limit = parseInt(req.query.limit);
+//     const skipIndex = (page - 1) * limit;
+//     console.log(req.params.applicantId)
     
-    const results = await ApplicationModel.find({    
-    applicantId: req.params.applicantId
-    }).sort({ dateApplied: -1})
-    .limit(limit)
-    .skip(skipIndex);
+//     const results = await ApplicationModel.find({    
+//     applicantId: req.params.applicantId
+//     }).sort({ dateApplied: -1})
+//     .limit(limit)
+//     .skip(skipIndex);
              
-    res.status(200).send(results)
+//     res.status(200).send(results)
         
-    }
-    catch(err){
-        console.log("Inside scholarshipController findApplications : " + err);
-    }
-}
+//     }
+//     catch(err){
+//         console.log("Inside scholarshipController findApplications : " + err);
+//     }
+// }
 
 
 
@@ -322,6 +327,25 @@ exports.findApplicationsApplied = async (req, res) => {
 
 }
 
+
+
+
+
+exports.findScholarshipsCreated = async (req, res) => {
+    try{
+        const scholarshipData = await ScholarshipModel.find({creatorId: req.params.creatorId})
+        if(scholarshipData === null){
+            res.status(204).send("No Scholarship are created by this user")
+        }
+        else {
+            res.status(200).send(scholarshipData)
+        }
+    }
+    catch(err){
+        console.log("Inside findScholarshipsCreated");
+    }
+
+}
 
 
 

@@ -3,21 +3,35 @@ const bcrypt = require("bcryptjs")
 
 
 
-exports.registerUser = ( req, res ) => {
+
+
+exports.registerUser = async( req, res ) => {
    // console.log("Inside resgiter user");
     
     const user = req.body;
-    const newUser = new UserModel(user);
-    newUser.save((err, result) => {
-        if (err){
-            res
-            .status(500)
-            .send(JSON.stringify({ message: "Something went wrong!", err }));
 
-        } else {
-            res.send(JSON.stringify({user: result}));
-        }
-    });
+
+    const userCheck = await UserModel.findOne({emailId: user.emailId});
+
+    if(userCheck === null){
+
+
+        const newUser = new UserModel(user);
+        newUser.save((err, result) => {
+            if (err){
+                res
+                .status(500)
+                .send(JSON.stringify({ message: "Something went wrong!", err }));
+
+            } else {
+                res.send(JSON.stringify({user: result}));
+            }
+        });
+    }else{
+        res.status(409).send("User Already Exist")
+    }
+
+
     // res.json(user);
 
     }
@@ -27,6 +41,7 @@ exports.find = async (req, res) => {
 
     try{
         console.log("param value:" + req.params.emailId)
+        
         const user = await UserModel.findOne({emailId: req.params.emailId});
         console.log("user "+user);
         if(user === null){

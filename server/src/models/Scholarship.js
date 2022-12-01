@@ -33,6 +33,26 @@ const ScholarshipSchema = new mongoose.Schema({
             applicantId: {
                 type: mongoose.Schema.Types.ObjectId
             },
+            applicantEmailId: {
+                type: String,
+                trim: true
+            },
+            applicantName: {
+                type: String,
+                trim: true
+            },
+            applicantUniversity: {
+                type: String,
+                trim: true
+            },
+            applicantProgram: {
+                type: String,
+                trim: true
+            },
+            applicantGPA: {
+                type: Number,
+                trim: true
+            },
             status : {
                 type: String,
                 trim: true

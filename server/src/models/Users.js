@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    gpa : {
+        type: Number,
+        trim: true
+    },
     role : {
         type: String,
         trim: true

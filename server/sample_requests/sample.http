@@ -6,7 +6,7 @@ content-type: application/json
 {
     "name": "Vivek Joshi",
     "age": 27,
-    "emailId": "vivek.joshi7@sjsu.edu",
+    "emailId": "vivek.joshi17@sjsu.edu",
     "password": "password123",
     "university": "San Jose State University",
     "program": "MSSE",
@@ -205,6 +205,13 @@ content-type: application/json
 GET http://localhost:8000/scholarships/apply/6375838f077ca5b4c2ba2e9c
 
 
+
+###
+// Get all the scholarships created by a user
+GET http://localhost:8000/scholarships/created/6375838f077ca5b4c2ba2e9c
+
+
+
 ###
 // How to update the status of individual scholarship status
 Post http://localhost:8000/scholarships/status
@@ -228,6 +235,9 @@ content-type: application/json
 # 2 - Compound index on university and scholarshipAmount field using query -
 #     db.scholarships.createIndex({"university": 1, "scholarshipAmount": 1})
 
+# 3 - Single field index on emailId of users -
+#     db.users.createIndex({emailId:1})
+
 # Can see the indexes created using query - db.scholarships.getIndexes()
 
 # [
@@ -247,6 +257,16 @@ content-type: application/json
 #     name: 'university_1_scholarshipAmount_1'
 #   }
 # ]
+
+
+# Can see the indexes created using query - db.users.getIndexes()
+# [
+#   { v: 2, key: { _id: 1 }, name: '_id_' },
+#   { v: 2, key: { emailId: 1 }, name: 'emailId_1' }
+# ]
+
+
+
 
 # # Can connect to mongoDB from terminal using -
 # mongosh mongodb+srv://cmpe297:cmpe297@project.bios0vn.mongodb.net/miniworld
