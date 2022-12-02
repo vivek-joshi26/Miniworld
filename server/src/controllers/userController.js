@@ -48,7 +48,7 @@ exports.find = async (req, res) => {
             res.status(204).send("User not present")
         }
         else {
-            res.status(200).send(user.emailId)
+            res.status(200).send(user)
         }
     }
     catch(err){

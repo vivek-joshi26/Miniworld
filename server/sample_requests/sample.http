@@ -49,7 +49,7 @@ GET http://localhost:8000/scholarships/63687600181ece6df9850366
 
 ###
 // Paginated API to get all the scholarships
-GET http://localhost:8000/scholarships?page=2&limit=6
+GET http://localhost:8000/scholarships?page=1&limit=300
 
 # {
 #   "results": [
@@ -76,7 +76,7 @@ GET http://localhost:8000/scholarships?page=2&limit=6
 
 ###
 // Paginated API to get scholarships based on a university name
-GET http://localhost:8000/scholarships?university=Santa Clara University&page=1&limit=4
+GET http://localhost:8000/scholarships?university=San Francisco State University&page=1&limit=4
 
 
 # {
